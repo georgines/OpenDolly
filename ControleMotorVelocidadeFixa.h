@@ -7,10 +7,10 @@ class ControleMotorVelocidadeFixa {
   public:
     ControleMotorVelocidadeFixa(uint8_t pinoStep, uint8_t pinoDirecao, float velocidade);
 
-    void configurarDestino(int32_t posicaoAlvo);
+    void aplicarPassoDestino(int32_t passoAlvo);
     void atualizar();
-    int32_t obterPosicaoAtual();
-    void setarPosicaoAtual(int32_t posicao);
+    int32_t obterPassoAtual();
+    void definirPassoAtual(int32_t passo);
     bool motorEmMovimento();
 
   private:
@@ -22,8 +22,8 @@ class ControleMotorVelocidadeFixa {
     float velocidade; // Velocidade fixa em passos por segundo
     float intervaloEntrePassos;
 
-    int32_t posicaoAtual;
-    int32_t posicaoAlvo;
+    int32_t passoAtual;
+    int32_t passoAlvo;
 
     uint64_t ultimoTempoPasso;
     bool emMovimento;

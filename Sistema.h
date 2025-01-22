@@ -24,19 +24,19 @@
 #define PINO_STEP_MOTOR_X 2
 #define PINO_DIR_MOTOR_X 3
 #define VELOCIDADE_MOTOR_X 500.0f
-#define POSICAO_MIN_MOTOR_X 0
-#define POSICAO_ATUAL_MOTOR_X 200
-#define POSICAO_MAX_MOTOR_X 400
+#define DESLOCAMENTO_MIN_MOTOR_X 0
+#define DESLOCAMENTO_ATUAL_MOTOR_X 100
+#define DESLOCAMENTO_MAXIMO_MOTOR_X 200
 
 #define PINO_STEP_MOTOR_Y 4
 #define PINO_DIR_MOTOR_Y 8
 #define VELOCIDADE_MOTOR_Y 500.0f
-#define POSICAO_MIN_MOTOR_Y 0
-#define POSICAO_ATUAL_MOTOR_Y 200
-#define POSICAO_MAX_MOTOR_Y 400
+#define ANGULACAO_MIN_MOTOR_Y 0
+#define ANGULACAO_ATUAL_MOTOR_Y 100
+#define ANGULACAO_MAXIMO_MOTOR_Y 200
 
-#define POSICAO_MAXIMA 400
-#define POSICAO_MINIMA 0
+#define passo_maximoIMA 400
+#define passo_minIMA 0
 //memoria
 #define MEMORIA_MAXIMA 3
 //menu
@@ -54,7 +54,7 @@
 //perimetro aproximado da polia PER = PI*d = 100mm
 //passo para uma volta completa = 200
 //incrimentos por passos = PER/200 = 0.5mm/passo
-#define INCREMENTO_POR_PASSO_X 0.5f //rotacao
+#define INCREMENTO_POR_PASSO_X 0.5f //deslocamento
 #define PASSOS_POR_GRAU_Y 2 //rotacao
 
 // Tipos de controle
@@ -63,13 +63,13 @@ typedef ControleAnalogico Analogico;
 
 // Estruturas de dados
 struct PosicaoMotor {
-    int motorX;
-    int motorY;
+    int32_t posicaoX;
+    int32_t anguloY;
 };
 
 struct Sistema {
-    Motor &MotorX;
-    Motor &MotorY;
+    Motor &motorX;
+    Motor &motorY;
     Analogico &joystick_X;
     Analogico &joystick_Y;
     Oled &tela;
@@ -80,7 +80,7 @@ struct Sistema {
     bool *memoriasGravadas;
     uint8_t &memoriaSelecionada;
     int32_t &ultimaPosicaoX;
-    int32_t &ultimaPosicaoY;
+    int32_t &ultimoAnguloY;
 };
 
 // Protótipos das funções organizados por responsabilidades
@@ -103,9 +103,14 @@ void gravarMemoriaAtual(Sistema &sistema);
 void lerMemoriaAtual(Sistema &sistema);
 
 // Funções de controle de motores
-void moverMotorLivre(Motor *motor, float *valor, uint32_t posicao_min, uint32_t posicao_max, const char eixo = ' ');
+void moverMotorLivre(Motor *motor, float *valor, uint32_t passo_min, uint32_t passo_maximo, const char eixo = ' ');
 bool houveAlteracaoPosicaoMotores(Sistema &sistema);
 void atualizarPosicoesMotores(Sistema &sistema);
+
+int32_t calcularPassosParaDeslocamento(int32_t distancia);
+int32_t calcularPassosParaInclinacao(int32_t angulo);
+int32_t calcularPosicaoAtual(int32_t passo_atual);
+int32_t calcularAnguloAtual(int32_t passo_atual);
 
 // Funções de loop
 void loopZerarPosicaoMotorX(Sistema &sistema);

@@ -1,7 +1,7 @@
 #include "ControleMotorVelocidadeFixa.h"
 
 ControleMotorVelocidadeFixa::ControleMotorVelocidadeFixa(uint8_t pinoStep, uint8_t pinoDirecao, float velocidade)
-  : pinoStep(pinoStep), pinoDirecao(pinoDirecao), velocidade(velocidade), posicaoAtual(0), posicaoAlvo(0), emMovimento(false) {
+  : pinoStep(pinoStep), pinoDirecao(pinoDirecao), velocidade(velocidade), passoAtual(0), passoAlvo(0), emMovimento(false) {
   this->intervaloEntrePassos = 1000000.0 / velocidade;
   gpio_init(this->pinoStep);
   gpio_set_dir(this->pinoStep, GPIO_OUT);
@@ -9,9 +9,9 @@ ControleMotorVelocidadeFixa::ControleMotorVelocidadeFixa(uint8_t pinoStep, uint8
   gpio_set_dir(this->pinoDirecao, GPIO_OUT);
 }
 
-void ControleMotorVelocidadeFixa::configurarDestino(int32_t posicaoAlvo) {
-  if (this->posicaoAlvo != posicaoAlvo) {
-    this->posicaoAlvo = posicaoAlvo;
+void ControleMotorVelocidadeFixa::aplicarPassoDestino(int32_t passoAlvo) {
+  if (this->passoAlvo != passoAlvo) {
+    this->passoAlvo = passoAlvo;
     this->emMovimento = true;
   }
 }
@@ -26,19 +26,19 @@ void ControleMotorVelocidadeFixa::atualizar() {
     this->realizarPasso();
     this->ultimoTempoPasso = tempoAtual;
 
-    if (this->posicaoAtual == this->posicaoAlvo) {
+    if (this->passoAtual == this->passoAlvo) {
       this->emMovimento = false;
     }
   }
 
 }
 
-int32_t ControleMotorVelocidadeFixa::obterPosicaoAtual() {
-  return this->posicaoAtual;
+int32_t ControleMotorVelocidadeFixa::obterPassoAtual() {
+  return this->passoAtual;
 }
 
-void ControleMotorVelocidadeFixa::setarPosicaoAtual(int32_t posicao) {
-  this->posicaoAtual = posicao;
+void ControleMotorVelocidadeFixa::definirPassoAtual(int32_t passo) {
+  this->passoAtual = passo;
 }
 
 
@@ -47,15 +47,15 @@ bool ControleMotorVelocidadeFixa::motorEmMovimento() {
 }
 
 void ControleMotorVelocidadeFixa::realizarPasso() {
-  if (this->posicaoAtual < this->posicaoAlvo) {
+  if (this->passoAtual < this->passoAlvo) {
     gpio_put(this->pinoDirecao, true);
-    this->posicaoAtual++;
-  } else if (this->posicaoAtual >= this->posicaoAlvo) {
+    this->passoAtual++;
+  } else if (this->passoAtual >= this->passoAlvo) {
     gpio_put(this->pinoDirecao, false);
-    this->posicaoAtual--;
+    this->passoAtual--;
   }
 
   gpio_put(this->pinoStep, true);
-  sleep_us(20); // Pulso mínimo para o STEP
+  sleep_us(20);
   gpio_put(this->pinoStep, false);
 }
