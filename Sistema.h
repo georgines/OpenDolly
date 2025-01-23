@@ -5,6 +5,7 @@
 #include "Acionador.h"
 #include "ControleMotorVelocidadeFixa.h"
 #include "ControleAnalogico.h"
+#include "PWM.h"
 
 //botao A e B
 #define PINO_A 5
@@ -52,6 +53,15 @@
 #define LINHA_3 44
 #define LINHA_MENU 56
 
+//buzzer
+#define PINO_BUZZER 10
+#define WRAP_BUZZER 4095 // Configurado para 1 kHz
+#define DIVISOR_CLOCK_BUZZER 30.52f // Configurado para 1 kHz
+#define DUTY_INICIAL_BUZZER 0
+#define DUTY_BUZZER 35
+#define DUTY_DESLIGAR_BUZZER 100
+#define TEMPO_BUZZER_MS 100
+
 //calculo de deslocamento motor
 //diametro da polia ideal: d = 31.83mm
 //perimetro aproximado da polia PER = PI*d = 100mm
@@ -84,9 +94,20 @@ struct Sistema {
     uint8_t &indiceMemoriaSelecionada;
     int32_t &ultimaPosicaoX;
     int32_t &ultimoAnguloY;
+    PWM &buzzer;
+    absolute_time_t inicioAtivacao;
+    bool ativo;
 };
 
 // Protótipos das funções organizados por responsabilidades
+
+//funcoes de timer
+absolute_time_t pegarTempoAbsolutoAtual();
+void inicializarTimer( Sistema &sistema, repeating_timer &timer);
+
+//funcoes buzzer
+bool atualizarTempo(struct repeating_timer *t);
+void acionarBuzzer(Sistema &sistema);
 
 // Funções de exibição
 void atualizarExibicaoMemoria(Sistema &sistema, const char *mensagem = nullptr);

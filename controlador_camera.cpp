@@ -5,8 +5,8 @@
 #include "auxiliarMemoria.h"
 #include "auxiliarConversore.h"
 #include "auxiliarControleMotor.h"
-#include "PWM.h"
-
+#include "auxiliarBuzzer.h"
+#include "auxiliarTimer.h"
 
 int main()
 {
@@ -17,6 +17,9 @@ int main()
   tela.definirFonte(fonte_customizada);
   tela.inicializar();
   tela.limpar();
+
+  PWM buzzer(PINO_BUZZER, WRAP_BUZZER, DIVISOR_CLOCK_BUZZER);
+  buzzer.iniciar(DUTY_INICIAL_BUZZER);
 
   Acionador botaoJoystick(PINO_JOYSTICK_SW);
   Acionador botaoA(PINO_A);
@@ -42,14 +45,17 @@ int main()
       joystick_X, joystick_Y,
       tela,
       botaoA, botaoB, botaoJoystick,
-      memorias,
-      memoriasGravadas,
-      indiceMemoriaSelecionada,
-      ultimaPosicaoX,
-      ultimoAnguloY};
+      memorias, memoriasGravadas, indiceMemoriaSelecionada,
+      ultimaPosicaoX, ultimoAnguloY,
+      buzzer, pegarTempoAbsolutoAtual(), false};
 
-  //exibirAnimacaoDeInicio(sistema);
-  //exibirInstrucoes(sistema);
+  repeating_timer timer;
+
+  acionarBuzzer(sistema);
+  inicializarTimer(sistema, timer);
+
+  exibirAnimacaoDeInicio(sistema);
+  exibirInstrucoes(sistema);
   loopZerarPosicaoMotorX(sistema);
   loopZerarPosicaoMotorY(sistema);
 

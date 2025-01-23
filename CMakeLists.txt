@@ -69,7 +69,9 @@ target_link_libraries(controlador_camera
         pico_binary_info
         hardware_adc
         hardware_pwm
-        hardware_gpio)
+        hardware_gpio
+        hardware_timer
+        hardware_irq)
 
 # Add the standard include files to the build
 target_include_directories(controlador_camera PRIVATE

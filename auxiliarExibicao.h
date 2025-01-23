@@ -58,10 +58,12 @@ void exibirMensagemTemporaria(Sistema &sistema, const char *mensagem, uint32_t d
 void exibirInstrucoes(Sistema &sistema)
 {
   const char *paginas[][4] = {
-      {"Instrucoes P1", "Botao Joystick:", "- Se chama J", "- Alterna Modos"},
-      {"Instrucoes P2", "Modo Live:", "- Mov. pelo Joy", ""},
-      {"Instrucoes P3", "Modo Memoria:", "- Mov. pela MEM", ""},
-      {"Instrucoes P4", "Botoes:", "A: Funcao A", "B: Funcao B"}};
+
+    {"  Instrucoes P1 ", "Botao Joystick: ", "- Se chama J    ", "- Alterna Modos "},
+    {"  Instrucoes P2 ", "Modo Live:      ", "- Movimenta pelo", "joystick        "},
+    {"  Instrucoes P3 ", "Modo Memoria:   ", "- Movimenta pela", "pos. da memoria "},
+    {"  Instrucoes P4 ", "Botoes:         ", "A: Funcao A     ", "B: Funcao B     "}
+  };
 
   int total_paginas = sizeof(paginas) / sizeof(paginas[0]);
   int pagina_atual = 0;
@@ -75,15 +77,14 @@ void exibirInstrucoes(Sistema &sistema)
     sistema.tela.imprimir(0, LINHA_2, paginas[pagina_atual][2]);
     sistema.tela.imprimir(0, LINHA_3, paginas[pagina_atual][3]);
     sistema.tela.imprimir(0, LINHA_MENU, "J: Proximo");
-    sistema.tela.renderizarDisplay();
+    sistema.tela.renderizarDisplay();    
 
-    //bool botao_joystick_nao_pressionado = !sistema.botaoJoystick.verificarAcionamento();
-    
     while (!sistema.botaoJoystick.verificarAcionamento())
     {
       sleep_ms(10);
     }
-
+    
+    acionarBuzzer(sistema);
     pagina_atual++;
     if (pagina_atual >= total_paginas)
     {

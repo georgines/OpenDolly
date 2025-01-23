@@ -1,7 +1,7 @@
 #pragma once
 #include "Sistema.h"
 
-//Funções de loop
+// Funções de loop
 void loopZerarPosicaoMotorX(Sistema &sistema)
 {
   exibirModoComCoordenadas(sistema, MODO_ZERAR_X);
@@ -10,6 +10,7 @@ void loopZerarPosicaoMotorX(Sistema &sistema)
   {
     if (sistema.botaoA.verificarAcionamento())
     {
+      acionarBuzzer(sistema);
       sistema.motorX.definirPassoAtual(calcularPassosParaDeslocamento(DESLOCAMENTO_MIN_MOTOR_X));
       break;
     }
@@ -30,6 +31,7 @@ void loopZerarPosicaoMotorY(Sistema &sistema)
     bool botao_b_pressionado = sistema.botaoB.verificarAcionamento();
     if (botao_b_pressionado)
     {
+      acionarBuzzer(sistema);
       sistema.motorY.definirPassoAtual(calcularPassosParaInclinacao(ANGULACAO_MIN_MOTOR_Y));
       break;
     }
@@ -56,8 +58,10 @@ void loopModoLivre(Sistema &sistema)
 {
 
   exibirModoComCoordenadas(sistema, MODO_LIVRE, sistema.ultimaPosicaoX, sistema.ultimoAnguloY);
+
   sistema.motorX.aplicarPassoDestino(sistema.motorX.obterPassoAtual());
   sistema.motorY.aplicarPassoDestino(sistema.motorY.obterPassoAtual());
+
   while (true)
   {
 
@@ -70,16 +74,19 @@ void loopModoLivre(Sistema &sistema)
 
     if (botao_a_pressionado)
     {
+      acionarBuzzer(sistema);
       selecionarMemoriaModoLivre(sistema);
     }
 
     if (botao_b_pressionado)
     {
+      acionarBuzzer(sistema);
       gravarMemoriaAtual(sistema);
     }
 
     if (botao_joystick_pressionado)
     {
+      acionarBuzzer(sistema);
       break;
     }
 
@@ -109,16 +116,19 @@ void loopModoMemoria(Sistema &sistema)
 
     if (botao_a_pressionado)
     {
+      acionarBuzzer(sistema);
       selecionarMemoriaModoMemoria(sistema);
     }
 
     if (botao_b_pressionado)
     {
+      acionarBuzzer(sistema);
       lerMemoriaApensSeFoiGravada(sistema);
     }
 
     if (botao_joystick_pressionado)
     {
+      acionarBuzzer(sistema);
       break;
     }
 
