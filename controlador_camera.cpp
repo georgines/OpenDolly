@@ -5,6 +5,8 @@
 #include "auxiliarMemoria.h"
 #include "auxiliarConversore.h"
 #include "auxiliarControleMotor.h"
+#include "PWM.h"
+
 
 int main()
 {
