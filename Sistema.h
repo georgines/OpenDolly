@@ -58,8 +58,8 @@
 #define WRAP_BUZZER 4095 // Configurado para 1 kHz
 #define DIVISOR_CLOCK_BUZZER 30.52f // Configurado para 1 kHz
 #define DUTY_INICIAL_BUZZER 0
-#define DUTY_BUZZER 35
-#define DUTY_DESLIGAR_BUZZER 100
+#define DUTY_BUZZER 50
+#define DUTY_DESLIGAR_BUZZER DUTY_INICIAL_BUZZER
 #define TEMPO_BUZZER_MS 100
 
 //calculo de deslocamento motor
@@ -95,8 +95,8 @@ struct Sistema {
     int32_t &ultimaPosicaoX;
     int32_t &ultimoAnguloY;
     PWM &buzzer;
-    absolute_time_t inicioAtivacao;
-    bool ativo;
+    volatile absolute_time_t inicioAtivacao;
+    volatile bool ativo;
 };
 
 // Protótipos das funções organizados por responsabilidades

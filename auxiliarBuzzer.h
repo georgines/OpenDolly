@@ -16,7 +16,6 @@ void acionarBuzzer(Sistema &sistema)
 {
     if (!sistema.ativo)
     {
-        sistema.buzzer.habilitar();
         sistema.buzzer.modificarDuty(DUTY_BUZZER);
         sistema.inicioAtivacao = get_absolute_time();
         sistema.ativo = true;
