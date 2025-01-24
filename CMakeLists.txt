@@ -28,42 +28,30 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(controlador_camera C CXX ASM)
+project(OpenDolly C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(controlador_camera controlador_camera.cpp )
+add_executable(OpenDolly OpenDolly.cpp )
 
-pico_set_program_name(controlador_camera "controlador_camera")
-pico_set_program_version(controlador_camera "0.1")
+pico_set_program_name(OpenDolly "OpenDolly")
+pico_set_program_version(OpenDolly "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(controlador_camera 0)
-pico_enable_stdio_usb(controlador_camera 1)
+pico_enable_stdio_uart(OpenDolly 0)
+pico_enable_stdio_usb(OpenDolly 1)
 
-# add_library(Acionador STATIC Acionador.cpp)
-# target_link_libraries(Acionador pico_stdlib)
-
-# add_library(ControleAnalogico STATIC ControleAnalogico.cpp)
-# target_link_libraries(ControleAnalogico pico_stdlib hardware_adc)
-
-# add_library(ControleMotorVelocidadeFixa STATIC ControleMotorVelocidadeFixa.cpp)
-# target_link_libraries(ControleMotorVelocidadeFixa pico_stdlib)
-
-# add_library(Oled STATIC Oled.cpp)
-# target_link_libraries(Oled pico_stdlib pico_binary_info hardware_i2c)
-
-target_sources(controlador_camera PRIVATE  
+target_sources(OpenDolly PRIVATE  
   Oled.cpp
   Acionador.cpp
   ControleMotorVelocidadeFixa.cpp
   ControleAnalogico.cpp
 )
 # Add the standard library to the build
-target_link_libraries(controlador_camera
+target_link_libraries(OpenDolly
         pico_stdlib
         hardware_i2c
         pico_binary_info
@@ -74,14 +62,14 @@ target_link_libraries(controlador_camera
         hardware_irq)
 
 # Add the standard include files to the build
-target_include_directories(controlador_camera PRIVATE
+target_include_directories(OpenDolly PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(controlador_camera 
+target_link_libraries(OpenDolly 
         
         )
 
-pico_add_extra_outputs(controlador_camera)
+pico_add_extra_outputs(OpenDolly)
 
