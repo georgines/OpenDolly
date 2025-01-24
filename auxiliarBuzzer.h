@@ -1,7 +1,8 @@
 #pragma once
 #include "Sistema.h"
 
-bool atualizarTempo(struct repeating_timer *t)
+
+bool desabilitarBuzzer(struct repeating_timer *t)
 {
     Sistema *sistema = reinterpret_cast<Sistema *>(t->user_data);
     if (sistema->ativo && absolute_time_diff_us(sistema->inicioAtivacao, get_absolute_time()) >= TEMPO_BUZZER_MS * 1000)

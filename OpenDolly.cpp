@@ -52,7 +52,7 @@ int main()
   repeating_timer timer;
 
   acionarBuzzer(sistema);
-  inicializarTimer(sistema, timer);
+  inicializarContadorDeTempoDoBuzzer(sistema, timer);
 
   exibirAnimacaoDeInicio(sistema);
   exibirInstrucoes(sistema);

@@ -103,10 +103,10 @@ struct Sistema {
 
 //funcoes de timer
 absolute_time_t pegarTempoAbsolutoAtual();
-void inicializarTimer( Sistema &sistema, repeating_timer &timer);
+void inicializarContadorDeTempoDoBuzzer( Sistema &sistema, repeating_timer &timer);
 
 //funcoes buzzer
-bool atualizarTempo(struct repeating_timer *t);
+bool desabilitarBuzzer(struct repeating_timer *t);
 void acionarBuzzer(Sistema &sistema);
 
 // Funções de exibição
