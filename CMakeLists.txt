@@ -49,6 +49,7 @@ target_sources(OpenDolly PRIVATE
   Acionador.cpp
   ControleMotorVelocidadeFixa.cpp
   ControleAnalogico.cpp
+  PWM.cpp
 )
 # Add the standard library to the build
 target_link_libraries(OpenDolly
