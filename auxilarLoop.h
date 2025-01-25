@@ -21,7 +21,7 @@ void loopZerarPosicaoMotorX(Sistema &sistema)
   }
 }
 
-void loopZerarPosicaoMotorY(Sistema &sistema)
+void loopZerarAnguloMotorY(Sistema &sistema)
 {
   exibirModoComCoordenadas(sistema, MODO_ZERAR_Y);
   moverMotorSentidoAntihorario(&sistema.motorY);

@@ -6,7 +6,6 @@
 #include "auxiliarConversore.h"
 #include "auxiliarControleMotor.h"
 #include "auxiliarBuzzer.h"
-#include "auxiliarTimer.h"
 
 int main()
 {
@@ -57,7 +56,7 @@ int main()
   exibirAnimacaoDeInicio(sistema);
   exibirInstrucoes(sistema);
   loopZerarPosicaoMotorX(sistema);
-  loopZerarPosicaoMotorY(sistema);
+  loopZerarAnguloMotorY(sistema);
 
   while (true)
   {

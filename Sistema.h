@@ -145,6 +145,6 @@ void controlarMotoresPeloJoystick(Sistema &sistema);
 
 //Funções de loop
 void loopZerarPosicaoMotorX(Sistema &sistema);
-void loopZerarPosicaoMotorY(Sistema &sistema);
+void loopZerarAnguloMotorY(Sistema &sistema);
 void loopModoLivre(Sistema &sistema);
 void loopModoMemoria(Sistema &sistema);
