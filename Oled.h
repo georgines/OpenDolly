@@ -51,9 +51,8 @@ class Oled {
     uint8_t paginaFim;
     int tamanhoBuffer;
     uint16_t *dadosFonte = nullptr;
-
-  public:
     uint8_t bufferDisplay[SSD1306_TAMANHO_BUFFER];
+  public:
     Oled(i2c_inst_t *i2c, uint8_t pinoSDA, uint8_t pinoSCL);
     void inicializar();
     void limpar();
