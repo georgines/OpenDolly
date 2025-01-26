@@ -12,7 +12,7 @@ int main()
 
   stdio_init_all();
 
-  Oled tela(i2c1, PINO_SDA, PINO_SCL);
+  Oled tela(i2c1, PINO_SDA_TELA, PINO_SCL_TELA);
   tela.definirFonte(fonte_customizada);
   tela.inicializar();
   tela.limpar();
@@ -20,9 +20,9 @@ int main()
   PWM buzzer(PINO_BUZZER, WRAP_BUZZER, DIVISOR_CLOCK_BUZZER);
   buzzer.iniciar(DUTY_INICIAL_BUZZER);
 
-  Acionador botaoJoystick(PINO_JOYSTICK_SW);
-  Acionador botaoA(PINO_A);
-  Acionador botaoB(PINO_B);
+  Acionador botaoJoystick(PINO_BOTAO_JOYSTICK);
+  Acionador botaoA(PINO_BOTAO_A);
+  Acionador botaoB(PINO_BOTAO_B);
 
   Motor motorX(PINO_STEP_MOTOR_X, PINO_DIR_MOTOR_X, VELOCIDADE_MOTOR_X);
   Motor motorY(PINO_STEP_MOTOR_Y, PINO_DIR_MOTOR_Y, VELOCIDADE_MOTOR_Y);
@@ -53,10 +53,10 @@ int main()
   acionarBuzzer(sistema);
   inicializarContadorDeTempoDoBuzzer(sistema, timer);
 
-  //exibirAnimacaoDeInicio(sistema);
-  //exibirInstrucoes(sistema);
-  //loopZerarPosicaoMotorX(sistema);
-  //loopZerarAnguloMotorY(sistema);
+  exibirAnimacaoDeInicio(sistema);
+  exibirInstrucoes(sistema);
+  loopZerarPosicaoMotorX(sistema);
+  loopZerarAnguloMotorY(sistema);
 
   while (true)
   {

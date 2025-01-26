@@ -35,12 +35,12 @@
 #endif
 
 // botao A, B, J
-#define PINO_A 5
-#define PINO_B 6
-#define PINO_JOYSTICK_SW 22
+#define PINO_BOTAO_A 5
+#define PINO_BOTAO_B 6
+#define PINO_BOTAO_JOYSTICK 22
 // pinos tela
-#define PINO_SDA 14
-#define PINO_SCL 15
+#define PINO_SDA_TELA 14
+#define PINO_SCL_TELA 15
 
 // driver motor
 #define PINO_STEP_MOTOR_X 2
@@ -57,8 +57,6 @@
 #define ANGULACAO_ATUAL_MOTOR_Y 0
 #define ANGULACAO_MAXIMO_MOTOR_Y 45
 
-#define passo_maximoIMA 400
-#define passo_minIMA 0
 // memoria
 #define MEMORIA_MAXIMA 3
 // menu
