@@ -27,8 +27,8 @@ int main()
   Motor motorX(PINO_STEP_MOTOR_X, PINO_DIR_MOTOR_X, VELOCIDADE_MOTOR_X);
   Motor motorY(PINO_STEP_MOTOR_Y, PINO_DIR_MOTOR_Y, VELOCIDADE_MOTOR_Y);
 
-  Analogico joystick_X(PINO_JOYSTICK_X, CANAL_JOYSTICK_X, VALOR_MIN_SAIDA, VALOR_MAX_SAIDA);
-  Analogico joystick_Y(PINO_JOYSTICK_Y, CANAL_JOYSTICK_Y, VALOR_MIN_SAIDA, VALOR_MAX_SAIDA);
+  Analogico joystick_X(PINO_JOYSTICK_X, CANAL_JOYSTICK_X, VALOR_MIN_SAIDA_X, VALOR_MAX_SAIDA_X);
+  Analogico joystick_Y(PINO_JOYSTICK_Y, CANAL_JOYSTICK_Y, VALOR_MIN_SAIDA_Y, VALOR_MAX_SAIDA_Y);
 
   motorX.definirPassoAtual(calcularPassosParaDeslocamento(DESLOCAMENTO_ATUAL_MOTOR_X));
   motorY.definirPassoAtual(calcularPassosParaInclinacao(ANGULACAO_ATUAL_MOTOR_Y));
@@ -53,10 +53,10 @@ int main()
   acionarBuzzer(sistema);
   inicializarContadorDeTempoDoBuzzer(sistema, timer);
 
-  exibirAnimacaoDeInicio(sistema);
-  exibirInstrucoes(sistema);
-  loopZerarPosicaoMotorX(sistema);
-  loopZerarAnguloMotorY(sistema);
+  //exibirAnimacaoDeInicio(sistema);
+  //exibirInstrucoes(sistema);
+  //loopZerarPosicaoMotorX(sistema);
+  //loopZerarAnguloMotorY(sistema);
 
   while (true)
   {

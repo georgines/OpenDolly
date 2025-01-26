@@ -7,21 +7,42 @@
 #include "ControleAnalogico.h"
 #include "PWM.h"
 
-//botao A e B
-#define PINO_A 5
-#define PINO_B 6
-//pinos tela
-#define PINO_SDA 14
-#define PINO_SCL 15
-//joystick
+#define SIMULADOR 0
+#define PLACA_DE_DESENVOLVIMENTO 1
+
+// alterna o joystick de acordo com o ambiente de execução
+#define AMBIENTE_EXECUCAO PLACA_DE_DESENVOLVIMENTO
+
+// joystick
+#if AMBIENTE_EXECUCAO == SIMULADOR
 #define PINO_JOYSTICK_X 27
 #define CANAL_JOYSTICK_X 0 // ADC0
+#define VALOR_MIN_SAIDA_X 1
+#define VALOR_MAX_SAIDA_X -1
 #define PINO_JOYSTICK_Y 26
 #define CANAL_JOYSTICK_Y 1 // ADC1
+#define VALOR_MIN_SAIDA_Y -1
+#define VALOR_MAX_SAIDA_Y 1
+#elif AMBIENTE_EXECUCAO == PLACA_DE_DESENVOLVIMENTO
+#define PINO_JOYSTICK_X 27
+#define CANAL_JOYSTICK_X 1 // ADC1
+#define VALOR_MIN_SAIDA_X -1
+#define VALOR_MAX_SAIDA_X 1
+#define PINO_JOYSTICK_Y 26
+#define CANAL_JOYSTICK_Y 0 // ADC0
+#define VALOR_MIN_SAIDA_Y -1
+#define VALOR_MAX_SAIDA_Y 1
+#endif
+
+// botao A, B, J
+#define PINO_A 5
+#define PINO_B 6
 #define PINO_JOYSTICK_SW 22
-#define VALOR_MIN_SAIDA -1
-#define VALOR_MAX_SAIDA 1
-//driver motor
+// pinos tela
+#define PINO_SDA 14
+#define PINO_SCL 15
+
+// driver motor
 #define PINO_STEP_MOTOR_X 2
 #define PINO_DIR_MOTOR_X 3
 #define VELOCIDADE_MOTOR_X 500.0f
@@ -38,49 +59,51 @@
 
 #define passo_maximoIMA 400
 #define passo_minIMA 0
-//memoria
+// memoria
 #define MEMORIA_MAXIMA 3
-//menu
+// menu
 #define MODO_LIVRE 0
 #define MODO_MEMORIA 1
 #define MODO_ZERAR_X 2
 #define MODO_ZERAR_Y 3
 
-//linhas menu
+// linhas menu
 #define LINHA_TITULO 0
 #define LINHA_1 20
 #define LINHA_2 32
 #define LINHA_3 44
 #define LINHA_MENU 56
 
-//buzzer
+// buzzer
 #define PINO_BUZZER 10
-#define WRAP_BUZZER 4095 // Configurado para 1 kHz
+#define WRAP_BUZZER 4095            // Configurado para 1 kHz
 #define DIVISOR_CLOCK_BUZZER 30.52f // Configurado para 1 kHz
 #define DUTY_INICIAL_BUZZER 0
 #define DUTY_BUZZER 50
 #define DUTY_DESLIGAR_BUZZER DUTY_INICIAL_BUZZER
 #define TEMPO_BUZZER_MS 100
 
-//calculo de deslocamento motor
-//diametro da polia ideal: d = 31.83mm
-//perimetro aproximado da polia PER = PI*d = 100mm
-//passo para uma volta completa = 200
-//incrimentos por passos = PER/200 = 0.5mm/passo
-#define INCREMENTO_POR_PASSO_X 0.5f //deslocamento
-#define PASSOS_POR_GRAU_Y 2 //rotacao
+// calculo de deslocamento motor
+// diametro da polia ideal: d = 31.83mm
+// perimetro aproximado da polia PER = PI*d = 100mm
+// passo para uma volta completa = 200
+// incrimentos por passos = PER/200 = 0.5mm/passo
+#define INCREMENTO_POR_PASSO_X 0.5f // deslocamento
+#define PASSOS_POR_GRAU_Y 2         // rotacao
 
 // Tipos de controle
 typedef ControleMotorVelocidadeFixa Motor;
 typedef ControleAnalogico Analogico;
 
 // Estruturas de dados
-struct PosicaoMotor {
+struct PosicaoMotor
+{
     int32_t posicaoX;
     int32_t anguloY;
 };
 
-struct Sistema {
+struct Sistema
+{
     Motor &motorX;
     Motor &motorY;
     Analogico &joystick_X;
@@ -101,11 +124,11 @@ struct Sistema {
 
 // Protótipos das funções organizados por responsabilidades
 
-//funcoes de timer
+// funcoes de timer
 absolute_time_t pegarTempoAbsolutoAtual();
-void inicializarContadorDeTempoDoBuzzer( Sistema &sistema, repeating_timer &timer);
+void inicializarContadorDeTempoDoBuzzer(Sistema &sistema, repeating_timer &timer);
 
-//funcoes buzzer
+// funcoes buzzer
 bool desabilitarBuzzer(struct repeating_timer *t);
 void acionarBuzzer(Sistema &sistema);
 
@@ -134,16 +157,16 @@ void atualizarPosicoesMotores(Sistema &sistema);
 void moverMotorSentidoHorario(Motor *motor);
 void moverMotorSentidoAntihorario(Motor *motor);
 
-//conversores de posicao angulo e passo
+// conversores de posicao angulo e passo
 int32_t calcularPassosParaDeslocamento(int32_t distancia);
 int32_t calcularPassosParaInclinacao(int32_t angulo);
 int32_t calcularPosicaoAtual(int32_t passo_atual);
 int32_t calcularAnguloAtual(int32_t passo_atual);
 
-//Funções para joystick
+// Funções para joystick
 void controlarMotoresPeloJoystick(Sistema &sistema);
 
-//Funções de loop
+// Funções de loop
 void loopZerarPosicaoMotorX(Sistema &sistema);
 void loopZerarAnguloMotorY(Sistema &sistema);
 void loopModoLivre(Sistema &sistema);
