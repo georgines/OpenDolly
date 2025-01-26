@@ -124,11 +124,9 @@ struct Sistema
 
 // Protótipos das funções organizados por responsabilidades
 
-// funcoes de timer
+// funcoes buzzer
 absolute_time_t pegarTempoAbsolutoAtual();
 void inicializarContadorDeTempoDoBuzzer(Sistema &sistema, repeating_timer &timer);
-
-// funcoes buzzer
 bool desabilitarBuzzer(struct repeating_timer *t);
 void acionarBuzzer(Sistema &sistema);
 
