@@ -3,19 +3,19 @@
 #include "auxiliarExibicao.h"
 
 // Funções de controle de motores
-void moverMotorLivre(Motor *motor, float *valor, uint32_t passo_min, uint32_t passo_maximo, const char eixo)
+void moverMotorLivre(Motor *motor, int32_t *valor, uint32_t passo_min, uint32_t passo_maximo, const char eixo)
 {
 
   // printf("Valor eixo %c: %f\r\n", eixo, *valor);
-  if (*valor > 0.8f)
+  if (*valor > 5)
   {
     motor->aplicarPassoDestino(passo_maximo);
   }
-  if (*valor < -0.8f)
+  if (*valor < -5)
   {
     motor->aplicarPassoDestino(passo_min);
   }
-  if (*valor > -0.5f && *valor < 0.5f)
+  if (*valor > -1 && *valor < 1)
   {
     motor->aplicarPassoDestino(motor->obterPassoAtual());
   }

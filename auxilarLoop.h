@@ -68,6 +68,8 @@ void loopModoLivre(Sistema &sistema)
     atualizarPosicoesMotores(sistema);
     controlarMotoresPeloJoystick(sistema);
 
+   //printf("valor: %d\r\n", (int32_t)sistema.joystick_X.lerValorAtual());
+
     bool botao_a_pressionado = sistema.botaoA.verificarAcionamento();
     bool botao_b_pressionado = sistema.botaoB.verificarAcionamento();
     bool botao_joystick_pressionado = sistema.botaoJoystick.verificarAcionamento();
